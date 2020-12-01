@@ -4,13 +4,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>3e4fa23a-be13-44a8-8c8c-aa28f7d5ce8e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>PythonApplication1.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>PythonApplication1</Name>
     <RootNamespace>PythonApplication1</RootNamespace>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +22,47 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="PythonApplication1.py" />
+    <Folder Include="Controller\" />
+    <Folder Include="Model\" />
+    <Folder Include="View\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="class1.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="main.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\day.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\employee.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\goal.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\gym.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\gym_class.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\member.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\person.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\training.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\traininggoal.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
