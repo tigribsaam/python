@@ -4,15 +4,26 @@ from Model.traininggoal import TrainingGoal
 class Member(Person):
     def __init__(self, nm, em, trg=None):
         super().__init__(nm, em)
-        self.__training_goal = TrainingGoal(trg.get_g_name(), trg.get_des())
+        if trg:
+            self.__training_goal = TrainingGoal(trg.get_g_name(), trg.get_des())
+        else:
+            self.__training_goal = None
 
     #def __init__(self, nm, em):
     #    super().__init__(nm, em)
 
 
 
+    def get_training_goal(self):
+        return self.__training_goal
+
+    def set_training_goal(self, trg):
+        self.__training_goal = trg
+
+
+
     def __repr__(self):
-        return super.__repr__() + "\n" + repr(tr)
+        return "name: " + self.get_p_name() + ", email: " + self.get_email() + "\n" + self.__training_goal.__repr__()
 
     def __str__(self):
         s = "Name: " + self.get_p_name() + "\nemail: " + self.get_email()
