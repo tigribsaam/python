@@ -3,6 +3,7 @@ class Training(object):
         self.__tr_name = nm
         self.__description = des
 
+
     def get_tr_name(self):
         return self.__tr_name
 
@@ -14,6 +15,7 @@ class Training(object):
 
     def set_des(self, des):
         self.__description = des
+
 
     def __repr__(self):
         return "training: " + self.__tr_name + ", des: " + self.__description

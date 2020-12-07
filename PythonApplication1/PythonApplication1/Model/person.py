@@ -3,6 +3,7 @@ class Person(object):
         self.__p_name = nm
         self.__email = em
 
+
     def get_p_name(self):
         return self.__p_name
 
@@ -14,6 +15,7 @@ class Person(object):
 
     def set_email(self, em):
         self.__email = em
+
 
     def __repr__(self):
         return "name: " + self.__p_name + ", email: " + self.__email

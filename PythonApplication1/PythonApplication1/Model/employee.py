@@ -5,11 +5,13 @@ class Employee(Person):
         super().__init__(nm, em)
         self.__job = jb
 
+
     def get_job(self):
         return self.__job
 
     def set_job(self, jb):
         self.__job = jb
+
 
     def __repr__(self):
         return "name: " + self.get_p_name() + ", email: " + self.get_email() + ", job: " + self.__job

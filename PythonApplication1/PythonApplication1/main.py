@@ -2,6 +2,7 @@ from Model.person import Person
 from Model.member import Member
 from Model.employee import Employee
 from Model.traininggoal import TrainingGoal
+from Model.gymclass import GymClass
 
 
 
@@ -19,10 +20,23 @@ print("\n==============================\n")
 
 m2 = Member("m2", "m2@email.com", tg)
 print(m2)
+print("\n==============================\n")
 
 e1 = Employee('e1', 'e1@email.com', 'instructor')
 print(e1)
+print("\n==============================\n")
+
+gc1 = GymClass('08:00', 'yoga', e1)
+print(gc1)
+print("\n==============================\n")
+
+gc1.add_members(m1)
+print(gc1)
+print("")
+
+gc1.add_members(m2)
+gc1.remove_members(m1)
+print(gc1)
+print("")
 
 
-#print(tg.get_g_name() + tg.get_tr_name() + tg.get_des())
-#print(tg.__repr__())

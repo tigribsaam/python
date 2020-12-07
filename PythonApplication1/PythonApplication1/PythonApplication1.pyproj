@@ -27,9 +27,6 @@
     <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="class1.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="main.py">
       <SubType>Code</SubType>
     </Compile>
@@ -45,7 +42,7 @@
     <Compile Include="Model\gym.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\gym_class.py">
+    <Compile Include="Model\gymclass.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\member.py">

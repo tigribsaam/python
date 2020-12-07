@@ -9,17 +9,12 @@ class Member(Person):
         else:
             self.__training_goal = None
 
-    #def __init__(self, nm, em):
-    #    super().__init__(nm, em)
-
-
 
     def get_training_goal(self):
         return self.__training_goal
 
     def set_training_goal(self, trg):
-        self.__training_goal = trg
-
+        self.__training_goal = TrainingGoal(trg.get_g_name(), trg.get_des())
 
 
     def __repr__(self):

@@ -6,8 +6,8 @@ class TrainingGoal(Training, Goal):
         Goal.__init__(self, nm)
         Training.__init__(self, nm, des)
 
+
     def __repr__(self):
-        #print(super().__repr__())
         return "goal: " + self.get_g_name() + ", training desc: " + self.get_des()
     
     def __str__(self):
