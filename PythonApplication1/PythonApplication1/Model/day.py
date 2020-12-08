@@ -1,24 +1,24 @@
-import time
 from Model.gymclass import GymClass
+from datetime import datetime
 
 class Day(object):
-    def __init__(dt):
+    def __init__(self, dt):
         self.__date = dt
         self.__gymclasses = []
 
-        self.__gymclasses.append(
+        self.__gymclasses.append([
             GymClass('08:00'),
             GymClass('09:00'),
             GymClass('10:00'),
             GymClass('19:00'),
             GymClass('20:00'),
             GymClass('21:00'),
-            GymClass('22:00'))
+            GymClass('22:00')])
     
     def get_date(self):
         return self.__date
 
-    #import time or datetime?? weekday function?
+    #returns interger of weekday monday = 0
     def get_day(self):
         return str(self.__date.weekday())
 
@@ -31,4 +31,5 @@ class Day(object):
 
     #todo
     def __repr__(self):
-        return "blabla"
+        s = self.get_day() + 'blabla'
+        return s

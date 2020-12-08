@@ -5,7 +5,10 @@ class GymClass(object):
     def __init__(self, time, class_name='', ins=None):
         self.__time = time
         self.__class_name = class_name
-        self.__instructor = Employee(ins.get_p_name(), ins.get_email(), ins.get_job())
+        if ins:
+            self.__instructor = Employee(ins.get_p_name(), ins.get_email(), ins.get_job())
+        else:
+            self._instructor = ins
         self.__members = []
 
 
@@ -41,7 +44,9 @@ class GymClass(object):
 
 
     def __repr__(self):
-        s = self.__class_name + ' ' + self.__time + '\nInstructor: ' + self.__instructor.get_p_name() + '\n'
+        s = self.__class_name + ' ' + self.__time 
+        if self.__instructor:
+            s += '\nInstructor: ' + self.__instructor.get_p_name() + '\n'
         if self.__members:
             s += 'Participants:'
             for m in self.__members:
