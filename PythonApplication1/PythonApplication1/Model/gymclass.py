@@ -6,9 +6,8 @@ class GymClass(object):
         self.__time = time
         self.__class_name = class_name
         if ins:
-            self.__instructor = Employee(ins.get_p_name(), ins.get_email(), ins.get_job())
-        else:
-            self._instructor = ins
+            ins = Employee(ins.get_p_name(), ins.get_email(), ins.get_job())
+        self.__instructor = ins
         self.__members = []
 
 
@@ -27,10 +26,10 @@ class GymClass(object):
         self.__members = []
 
     def get_instructor(self):
-        return self.__instructor
+            return self.__instructor
 
     def set_instructor(self, ins):
-        self.__instructor = Employee(ins)
+        self.__instructor = Employee(ins.get_p_name(), ins.get_email(), ins.get_job())
 
     def get_members(self):
         return tuple(self.__members)
@@ -44,7 +43,7 @@ class GymClass(object):
 
 
     def __repr__(self):
-        s = self.__class_name + ' ' + self.__time 
+        s = self.__time + ' ' + self.__class_name  
         if self.__instructor:
             s += '\nInstructor: ' + self.__instructor.get_p_name() + '\n'
         if self.__members:
