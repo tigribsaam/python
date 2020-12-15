@@ -22,9 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Controller\" />
     <Folder Include="Model\" />
-    <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="main.py">
