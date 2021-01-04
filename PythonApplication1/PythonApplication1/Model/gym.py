@@ -1,3 +1,6 @@
+from Model.day import Day
+from datetime import datetime
+
 class Gym(object):
     def __init__(self, nm):
         self.__name = nm
@@ -10,7 +13,7 @@ class Gym(object):
         self.__name = nm
 
     def find_day(self, date):
-        wanted_day = None
+        wanted_date = None
 
         for  d in self.__week_schedule:
             if d.get_date() == date:
