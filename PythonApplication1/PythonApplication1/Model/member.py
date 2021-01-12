@@ -2,7 +2,7 @@ from Model.person import Person
 from Model.traininggoal import TrainingGoal
 
 class Member(Person):
-    def __init__(self, nm, em, trg=None):
+    def __init__(self, nm, em='', trg=None):
         super().__init__(nm, em)
         if trg:
             self.__training_goal = TrainingGoal(trg.get_g_name(), trg.get_des())
