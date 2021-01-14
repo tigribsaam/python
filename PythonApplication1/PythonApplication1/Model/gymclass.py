@@ -2,7 +2,7 @@ from Model.member import Member
 from Model.employee import Employee
 
 class GymClass(object):
-    def __init__(self, time, class_name=" ", ins=None):
+    def __init__(self, time="", class_name="", ins=None):
         self.__time = time
         self.__class_name = class_name
         if ins:

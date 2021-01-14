@@ -16,8 +16,10 @@ class Gym(object):
         wanted_date = None
 
         for  d in self.__week_schedule:
+            
             if d.get_date() == date:
                 wanted_date = d
+                print("find date func in gym.py, date was found:"  + str(d.get_date()))
                 break
 
         if wanted_date == None:

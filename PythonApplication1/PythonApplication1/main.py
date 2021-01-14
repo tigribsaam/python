@@ -42,32 +42,33 @@ def schedule():
     class08_label.grid(row=1, column=0)
     instructor08_label = Label(schedule_box, text='Instructor: geen')
     instructor08_label.grid(row=1, column=1)
-    members08_listbox = Listbox(schedule_box, )
-    members08_listbox.insert(END, "hoi", 9086, 'gvd werk gwn')
+    members08_listbox = Listbox(schedule_box )
     members08_listbox.grid(row=2, column=0, columnspan= 2)
 
-    gym_day = Day(gym.find_day(shown_day))
-    #print(gym_day)
+    gym_day = gym.find_day(shown_day)
+    #print(gym_day.get_date())
 
     class08 = gym_day.find_class_by_time('08:00')
     for mem in class08.get_members():
-        #gaat dit goed??
-        members08_listbox.insert(mem)
+        members08_listbox.insert(END, mem)
+        
     if class08.get_instructor():
         instructor08_label.config(text = class08.get_instructor())
 
     #bind listbox and instructor label
-    members08_listbox.bind("<Button-1>", list_handler_left)
+    #members08_listbox.bind("<Button-1>", list_handler_left)
+    members08_listbox.bind("<Button-1>", lambda event, arg='08:00': list_handler_left(event, arg))
 
 
 
 
 
-
-
-def list_handler_left(event):
+def list_handler_left(event, time):
+    print(time)
     
-    list = GymClass(event.widget.get(0, END))
+    list = GymClass()
+    for m in event.widget.get(0, END):
+        list.add_members(m)
 
     member_dialog = tkinter.simpledialog.askstring('Add member', 'Enter name:')
     if (member_dialog):
@@ -79,12 +80,22 @@ def list_handler_left(event):
                 raise Exception
         except Exception as e:
             messagebox.showerror("Error", "Gym class is full")
+    else:
+        messagebox.showerror("Error", "Something went wrong...")
 
     print(list.get_members())
     event.widget.delete(0, END)
-
     for m in list.get_members():
-        event.widget.insert(END, m)         
+        event.widget.insert(END, m) 
+
+    gym_day = gym.find_day(shown_day)
+    gym_class = gym_day.find_class_by_time(time)
+    gym_class.add_members(list.get_members()[-1])
+
+
+
+   
+        
 
 
 
