@@ -1,7 +1,7 @@
 from Model.person import Person
 
 class Employee(Person):
-    def __init__(self, nm, em, jb):
+    def __init__(self, nm, em='', jb=''):
         super().__init__(nm, em)
         self.__job = jb
 

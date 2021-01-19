@@ -29,7 +29,7 @@ class GymClass(object):
             return self.__instructor
 
     def set_instructor(self, ins):
-        self.__instructor = Employee(ins.get_p_name(), ins.get_email(), ins.get_job())
+        self.__instructor = ins
 
     def get_members(self):
         return tuple(self.__members)
