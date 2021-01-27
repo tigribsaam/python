@@ -12,41 +12,55 @@ import tkinter.simpledialog
 from tkinter import messagebox
 import pickle
 import os
+import threading
+from time import sleep
 
 
 '''
 working on: 
-- pickling file 
+multithreading
 
 todo: 
-- exceptionhandling -> filehandling
+- exceptionhandling -> filehandling opening file
 - multithreading (clock)
 - 10 classes (now 9)
-- client/netwerk app (send schedule to other thing???)
+- client/netwerk app (send schedule to another thing???)
+
+could:
+- no new employees or members in schedule select from list
+- create button for members and employee
+- gym class add name
 
 '''
 
 
+
+
 gym = Gym('sportschool')
 shown_day = datetime.today()
+the_time = True
 root = Tk()
 
 root.title(gym.get_name())
 root.geometry('700x500')
-#root.resizable(width=FALSE, height=FALSE)
+root.resizable(width=FALSE, height=FALSE)
 
 schedule_box = Frame(root)
 schedule_box.grid(row=0, column=0, columnspan=6)
 	
-date_label = Label(schedule_box, text=shown_day)
+date_label = Label(schedule_box, text=shown_day.strftime("%d/%m/%Y"))
 date_label.grid()
 
 
-navigation_box = Frame(root).grid(row=1, column=0)
-week_back_btn = Button(navigation_box, text="<< Vorige week", command=lambda: change_day(-7)).grid(row=5, column=0, padx= 10)
-day_back_btn = Button(navigation_box, text="< Gisteren", command=lambda: change_day(-1)).grid(row=5, column=1, padx= 10)
-day_forward_btn = Button(navigation_box, text="Morgen >", command=lambda: change_day(1)).grid(row=5, column=2, padx= 10)
-week_forward_btn = Button(navigation_box, text="Volgende weerk >>", command=lambda: change_day(7)).grid(row=5, column=3, padx= 10)
+clock = Label(schedule_box, text= the_time)
+clock.grid(row=0, column=3)
+
+
+#navigation_box = Frame(root).grid(row=1, column=0)
+week_back_btn = Button(root, text="<< Vorige week", command=lambda: change_day(-7)).grid(row=1, column=0, padx= 10)
+day_back_btn = Button(root, text="< Gisteren", command=lambda: change_day(-1)).grid(row=1, column=1, padx= 10)
+day_forward_btn = Button(root, text="Morgen >", command=lambda: change_day(1)).grid(row=1, column=2, padx= 10)
+week_forward_btn = Button(root, text="Volgende week >>", command=lambda: change_day(7)).grid(row=1, column=3, padx= 10)
 
 
 
@@ -54,8 +68,10 @@ week_forward_btn = Button(navigation_box, text="Volgende weerk >>", command=lamb
 def change_day(days):
     global shown_day
     shown_day = shown_day + timedelta(days)
-    date_label.config(text = shown_day)
+    date_label.config(text = shown_day.strftime("%d/%m/%Y"))
     schedule()
+
+
 
 
 
@@ -83,10 +99,10 @@ def file_handling(day_obj):
         gym_data.append(day_obj)
 
 
-    print(day_obj)
-    print('--------------------')
-    print(gym_data)
-    print('====================')
+    #print(day_obj)
+    #print('--------------------')
+    #print(gym_data)
+    #print('====================')
 
 
     schedule_file = open('schedule.txt', 'wb')
@@ -125,8 +141,8 @@ def schedule():
         #labels and listbox for each gym class
         class08_label = Label(schedule_box, text= gym_class.get_time())
         class08_label.grid(row=index_row, column= index_column)
-        instructor08_label = Label(schedule_box, text='Instructor: - ')
-        instructor08_label.grid(row=index_row+1, column= index_column)
+        instructor08_label = Label(schedule_box, text='Instructeur: - ')
+        instructor08_label.grid(row=index_row+1, column= index_column, sticky='WE')
         members08_listbox = Listbox(schedule_box)
         members08_listbox.grid(row=index_row+2, column= index_column)
 
@@ -135,7 +151,7 @@ def schedule():
         for mem in class08.get_members():
             members08_listbox.insert(END, mem.get_p_name())
         if class08.get_instructor():
-            instructor08_label.config(text = 'Instructor: ' + class08.get_instructor().get_p_name())
+            instructor08_label.config(text = 'Instructeur: ' + class08.get_instructor().get_p_name())
 
         #bind listbox and instructor label
         members08_listbox.bind("<Double-Button-1>", lambda event, time= class08.get_time(): list_handler_add(event, time))
@@ -152,7 +168,7 @@ def list_handler_add(event, time):
     
     gym_class = gym_day.find_class_by_time(time)
 
-    member_dialog = tkinter.simpledialog.askstring('Add member', 'Enter name:')
+    member_dialog = tkinter.simpledialog.askstring('Voeg deelnemer toe', 'Voer naam in: ')
     if (member_dialog):
         mem = Member(member_dialog)
         if gym_class.add_members(mem):
@@ -163,9 +179,9 @@ def list_handler_add(event, time):
             file_handling(gym_day)
 
         else:
-            messagebox.showerror("Error", "Gym class is full")
+            messagebox.showerror("Foutmelding", "De les zit vol")
     else:
-        messagebox.showwarning("Warning", "No changes were made")
+        messagebox.showwarning("Waarschuwing", "Er is niks veranderd")
 
 
 def list_handler_delete(event, time):
@@ -193,36 +209,38 @@ def instructor_handler(event, time):
     gym_day = gym.find_day(shown_day)
     gym_class = gym_day.find_class_by_time(time)
 
-    ins_dialog = tkinter.simpledialog.askstring('Add instructor', 'Enter name:')
+    ins_dialog = tkinter.simpledialog.askstring('Voer instructeur toe', 'Voer naam in: ')
     if (ins_dialog):
         #TODO get all employees, no new object
         ins = Employee(ins_dialog)
 
         gym_class.set_instructor(ins)
-        event.widget.config(text = 'Instructor: ' + ins.get_p_name())
+        event.widget.config(text = 'Instructeur: ' + ins.get_p_name())
         file_handling(gym_day)
 
     else:
-        messagebox.showwarning("Warning", "No changes were made")
+        messagebox.showwarning("Waarschuwing", "Er is niks veranderd")
 
 
-
+def useless_clock():
+    global the_time
+    the_time = True
     
-
-
-
-   
+    while the_time:
+        clock.config(text= datetime.today().strftime("%H:%M:%S"))
+        sleep(0.99999999999)
         
 
 
 
 
 
-
-
-
+clock_thread = threading.Thread(target=useless_clock)
+#clock_thread.setDaemon(True)
+clock_thread.start()
 
 schedule()
 
-root.mainloop()
 
+root.mainloop()
+the_time= False
