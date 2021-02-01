@@ -28,9 +28,6 @@
     <Compile Include="main.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\clock.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Model\day.py">
       <SubType>Code</SubType>
     </Compile>

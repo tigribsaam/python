@@ -14,15 +14,15 @@ import pickle
 import os
 import threading
 from time import sleep
+import socket
 
 
 '''
 working on: 
-multithreading
+client/netwerk app (send schedule to another thing???)
 
 todo: 
 - exceptionhandling -> filehandling opening file
-- multithreading (clock)
 - 10 classes (now 9)
 - client/netwerk app (send schedule to another thing???)
 
@@ -45,22 +45,41 @@ root.title(gym.get_name())
 root.geometry('700x500')
 root.resizable(width=FALSE, height=FALSE)
 
-schedule_box = Frame(root)
-schedule_box.grid(row=0, column=0, columnspan=6)
-	
-date_label = Label(schedule_box, text=shown_day.strftime("%d/%m/%Y"))
-date_label.grid()
+s = socket.socket()         # Create a socket object
+host = socket.gethostname() # Get local machine name
+port = 12345                # Reserve a port for your service.
+s.bind((host, port))        # Bind to the port
 
 
-clock = Label(schedule_box, text= the_time)
-clock.grid(row=0, column=3)
 
 
-#navigation_box = Frame(root).grid(row=1, column=0)
-week_back_btn = Button(root, text="<< Vorige week", command=lambda: change_day(-7)).grid(row=1, column=0, padx= 10)
-day_back_btn = Button(root, text="< Gisteren", command=lambda: change_day(-1)).grid(row=1, column=1, padx= 10)
-day_forward_btn = Button(root, text="Morgen >", command=lambda: change_day(1)).grid(row=1, column=2, padx= 10)
-week_forward_btn = Button(root, text="Volgende week >>", command=lambda: change_day(7)).grid(row=1, column=3, padx= 10)
+def server():
+    print('1')
+    
+    
+    info_label.config(text='probeert verbinding te maken...')
+    
+
+    try:
+        print('2')
+        
+        s.settimeout(5)
+        listen = s.listen(1)
+
+        schedule = bytes(gym.find_day(shown_day).__str__(),'utf-8')
+                       # Now wait for client connection.
+        while True:
+           c, addr = s.accept()     # Establish connection with client.
+           print('Got connection from', addr)
+           c.send(schedule)
+           c.close() 
+    except Exception as e:
+        print(e)
+        info_label.config(text='verbinding maken mislukt')
+        #change 'label' failed to connect or sum
+        s.timeout
+
+    
 
 
 
@@ -70,9 +89,6 @@ def change_day(days):
     shown_day = shown_day + timedelta(days)
     date_label.config(text = shown_day.strftime("%d/%m/%Y"))
     schedule()
-
-
-
 
 
 
@@ -108,17 +124,6 @@ def file_handling(day_obj):
     schedule_file = open('schedule.txt', 'wb')
     pickle.dump(gym_data, schedule_file)
     schedule_file.close()
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -232,13 +237,39 @@ def useless_clock():
         
 
 
+schedule_box = Frame(root)
+schedule_box.grid(row=0, column=0, columnspan=6, padx=20, pady=10)
+	
+date_label = Label(schedule_box, text=shown_day.strftime("%d/%m/%Y"))
+date_label.grid()
 
+
+clock = Label(schedule_box, text= the_time)
+clock.grid(row=0, column=3)
+
+server_btn = Button(schedule_box, text='stuur rooster', command= server) 
+server_btn.grid(row=1, column=5, padx=10)
+
+info_label = Label(schedule_box, text='up to date')
+info_label.grid(row=3, column=5, columnspan=2, padx=10)
+
+
+
+#navigation_box = Frame(root).grid(row=1, column=0)
+week_back_btn = Button(root, text="<< Vorige week", command=lambda: change_day(-7)).grid(row=1, column=0, padx= 10)
+day_back_btn = Button(root, text="< Gisteren", command=lambda: change_day(-1)).grid(row=1, column=1, padx= 10)
+day_forward_btn = Button(root, text="Morgen >", command=lambda: change_day(1)).grid(row=1, column=2, padx= 10)
+week_forward_btn = Button(root, text="Volgende week >>", command=lambda: change_day(7)).grid(row=1, column=3, padx= 10)
+
+
+
+
+#server_thread = threading.Thread(target=server)
 
 
 clock_thread = threading.Thread(target=useless_clock)
 #clock_thread.setDaemon(True)
 clock_thread.start()
-
 schedule()
 
 
