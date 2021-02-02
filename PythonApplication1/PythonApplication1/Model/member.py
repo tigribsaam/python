@@ -21,7 +21,7 @@ class Member(Person):
         return "name: " + self.get_p_name() + ", email: " + self.get_email() + "\n" + self.__training_goal.__repr__()
 
     def __str__(self):
-        s = "Name: " + self.get_p_name() + "\n" + " email: " + self.get_email()
+        s = "Name: " + self.get_p_name() + "\n" + "email: " + self.get_email()
         #print("class member: " + s)
         if self.__training_goal:
             s += "\n" + self.__training_goal.__str__()

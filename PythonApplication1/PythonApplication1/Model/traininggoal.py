@@ -1,6 +1,7 @@
 from Model.training import Training
 from Model.goal import Goal
 
+#multiple inheritance
 class TrainingGoal(Training, Goal):
     def __init__(self, nm, des):
         Goal.__init__(self, nm)

@@ -34,11 +34,13 @@ class GymClass(object):
     def get_members(self):
         return tuple(self.__members)
 
+    #adds members (no more than 5 and no duplicates)
     def add_members(self, mem):
         if len(self.__members) < 5 and (mem not in self.__members):
             self.__members.append(mem)
             return True
 
+    #deletes members
     def remove_members(self, mem):
         self.__members.remove(mem)
 

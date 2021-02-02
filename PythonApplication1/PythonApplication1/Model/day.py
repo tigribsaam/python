@@ -4,6 +4,8 @@ from datetime import datetime
 class Day(object):
     def __init__(self, dt):
         self.__date = dt
+
+        #create gym class objects
         self.__gymclasses = [ 
             GymClass('07:00'),
             GymClass('08:00'),
@@ -16,11 +18,6 @@ class Day(object):
     
     def get_date(self):
         return self.__date.strftime("%d/%m/%Y")
-
-    #returns interger of weekday monday = 0
-    """gebruik ik dit wel???"""
-    def get_weekday(self):
-        return str(self.__date.weekday())
 
     def get_gymclasses(self):
         return self.__gymclasses
@@ -45,7 +42,7 @@ class Day(object):
         return s
 
     def __str__(self):
-        s = str(self.get_date())
+        s = self.get_date()
         for g in self.__gymclasses:
             s += '\n' + g.get_time() + '\tIns: '
             if g.get_instructor(): 

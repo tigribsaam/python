@@ -7,14 +7,14 @@ class Gym(object):
         self.__name = nm
         self.__week_schedule = []
 
-        # do not load days in the past????
+        #when creating gym object it loads days saved in the file schedule.txt
         try:
             schedule_file = open('schedule.txt', 'rb')
             dates = pickle.load(schedule_file)
             for d in dates:
                 self.__week_schedule.append(d)
         except Exception as e:
-            print('Gym class, something went wrong: ', e)
+            print('Gym class, something (maybe) went wrong: ', e)
 
 
     def get_name(self):
@@ -23,6 +23,7 @@ class Gym(object):
     def set_name(self, nm):
         self.__name = nm
 
+    #gets day from list, if not found it creates new day object
     def find_day(self, date):
         wanted_date = None
 

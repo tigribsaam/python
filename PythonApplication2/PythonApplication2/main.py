@@ -5,9 +5,7 @@ s = socket.socket()         # Create a socket object
 host = socket.gethostname() # Get local machine name
 port = 12345                # Reserve a port for your service.
 
-x = True
-
-while x:
+while True:
     try:
         s.connect((host, port))
         response = s.recv(1024).decode("utf-8")

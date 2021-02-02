@@ -34,6 +34,9 @@
     <Compile Include="Model\employee.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\employeemember.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\goal.py">
       <SubType>Code</SubType>
     </Compile>
@@ -58,7 +61,7 @@
     <Compile Include="Model\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="test.py">
+    <Compile Include="console.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
